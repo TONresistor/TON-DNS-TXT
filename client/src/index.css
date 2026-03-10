@@ -76,7 +76,7 @@ body {
     linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 18%),
     var(--bg-primary);
   color: var(--text-primary);
-  min-height: 100vh;
+  min-height: 100svh;
   line-height: 1.5;
 }
 
@@ -207,7 +207,7 @@ button, input, select, textarea {
 
 /* ── App layout ── */
 .app {
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
 }
@@ -216,7 +216,7 @@ button, input, select, textarea {
   background: var(--header-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
-  padding: 14px 24px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -232,10 +232,26 @@ button, input, select, textarea {
   color: var(--text-primary);
 }
 
-.header-right {
+/* Desktop: single row — utils on right, main (title + connect) on left */
+.header-row-top {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 14px 0;
+  order: 2;
+}
+
+.header-row-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  padding: 14px 0;
+  order: 1;
+}
+
+.header-row-main h1 {
+  flex: 1;
 }
 
 .app-main {
@@ -249,6 +265,7 @@ button, input, select, textarea {
 .app-footer {
   text-align: center;
   padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
   font-size: 0.75rem;
   color: var(--text-secondary);
   border-top: 1px solid var(--border);
@@ -354,11 +371,15 @@ button, input, select, textarea {
   box-shadow: var(--panel-shadow);
 }
 
-.records-section h3,
+.section-label + .records-section {
+  padding-top: 12px;
+}
+
+.section-label,
 .add-section h3 {
   font-size: 0.85rem;
   font-weight: 600;
-  margin-bottom: 14px;
+  margin-bottom: 5px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-secondary);
@@ -408,12 +429,62 @@ button, input, select, textarea {
 
 .record-actions {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   white-space: nowrap;
   justify-content: flex-end;
 }
 
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  flex-shrink: 0;
+}
+
+.icon-btn--edit:hover  { background: var(--accent-subtle); color: var(--accent); border-color: var(--accent); }
+.icon-btn--delete:hover { background: rgba(239,68,68,0.08); color: var(--error); border-color: rgba(239,68,68,0.3); }
+.icon-btn--confirm { color: var(--success); }
+.icon-btn--confirm:hover { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); }
+.icon-btn--cancel:hover { background: var(--bg-muted); color: var(--text-primary); border-color: var(--border); }
+.icon-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
 /* ── Add form ── */
+.hint-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.hint-toggle h3 {
+  margin-bottom: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.hint-chevron {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.hint-chevron--open {
+  transform: rotate(180deg);
+}
+
 .hint {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -504,9 +575,42 @@ button, input, select, textarea {
 /* ── Responsive ── */
 @media (max-width: 600px) {
   .app-header {
-    flex-wrap: nowrap;
-    padding: 10px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 16px;
+    gap: 0;
   }
+
+  /* Row 1: utils (theme + lang) — absorbs the safe area at top */
+  .header-row-top {
+    order: 1;
+    justify-content: flex-end;
+    padding: 0;
+    padding-top: calc(5px + var(--tg-safe-area-inset-top, env(safe-area-inset-top, 0px)));
+    padding-bottom: 4px;
+    padding-right: 80px;
+  }
+
+  /* Buttons slightly smaller on mobile */
+  .header-row-top button {
+    width: 30px !important;
+    height: 30px !important;
+    margin-top: 3px;
+    background: rgba(0, 0, 0, 0.20) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff !important;
+  }
+
+  /* Row 2: title + connect — pushed below safe area */
+  .header-row-main {
+    order: 2;
+    justify-content: space-between;
+    padding: 4px 0 12px;
+    flex: unset;
+  }
+
   .app-header h1 {
     flex: 1;
     min-width: 0;
@@ -514,9 +618,26 @@ button, input, select, textarea {
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  .header-right {
-    flex-shrink: 0;
-  }
-  .records-table { font-size: 0.8rem; }
-  .record-value { max-width: 160px; }
+
+  /* Table — readable font, more touch-friendly rows */
+  .records-table { font-size: 0.9rem; }
+  .records-table th { font-size: 0.75rem; padding: 8px 8px; }
+  .records-table td { padding: 13px 8px; }
+  .record-value { max-width: 140px; }
+
+  /* Icon buttons — bigger touch target (min 36px) */
+  .icon-btn { width: 36px; height: 36px; }
+
+  /* Form */
+  .domain-btn { min-height: 52px; }
+  .form-row label { font-size: 0.9rem; }
+  .form-row input,
+  .form-row textarea { font-size: 16px; padding: 11px 12px; }
+
+  /* App main — less top padding on mobile */
+  .app-main { padding: 20px 12px; }
+
+  /* Sections — slightly less padding on mobile */
+  .records-section,
+  .add-section { padding: 14px; }
 }

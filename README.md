@@ -6,7 +6,7 @@
 
 <br/>
 
-<a href="https://dns.resistance.dog"><img src="https://img.shields.io/badge/Live_Demo-dns.resistance.dog-0098ea?style=flat-square" alt="Live Demo"/></a>
+<a href="https://t.me/DNSTextBot"><img src="https://img.shields.io/badge/Live_Demo-t.me%2FDNSTextBot-0098ea?style=flat-square" alt="Live Demo"/></a>
 <a href="https://ton.org"><img src="https://img.shields.io/badge/Built_on-TON_Blockchain-0098ea?style=flat-square" alt="TON Blockchain"/></a>
 <a href="https://dns.ton.org"><img src="https://img.shields.io/badge/TON_DNS-dns.ton.org-0067cc?style=flat-square" alt="TON DNS"/></a>
 <img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" alt="MIT License"/>
@@ -148,7 +148,7 @@ To delete a record, omit `.storeRef(valueCell)`. The contract checks `slice_refs
 
 ---
 
-## Live Demo Stack
+## Stack
 
 | Layer | Tech |
 |---|---|
