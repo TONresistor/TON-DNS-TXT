@@ -16,5 +16,8 @@ export const TX_FEE_AMOUNT = import.meta.env.VITE_TX_FEE_AMOUNT ?? '450000000';
 // Service wallet that receives the fee
 export const OWNER_WALLET = import.meta.env.VITE_OWNER_WALLET ?? '';
 
+// Enable/disable service fee (set VITE_ENABLE_FEES=false to disable)
+export const FEES_ENABLED = import.meta.env.VITE_ENABLE_FEES !== 'false';
+
 // Max bytes per chunk in a single cell: (1023 - 16 - 8 - 8) / 8 = 123
 export const MAX_CHUNK_BYTES = 123;

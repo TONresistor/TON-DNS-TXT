@@ -8,6 +8,8 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 4727;
 
+app.disable('x-powered-by');
+
 app.use((_, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();

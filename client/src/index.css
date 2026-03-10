@@ -229,7 +229,7 @@ button, input, select, textarea {
 .app-header h1 {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .header-right {
@@ -503,7 +503,20 @@ button, input, select, textarea {
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
-  .app-header { flex-wrap: wrap; }
+  .app-header {
+    flex-wrap: nowrap;
+    padding: 10px 16px;
+  }
+  .app-header h1 {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .header-right {
+    flex-shrink: 0;
+  }
   .records-table { font-size: 0.8rem; }
   .record-value { max-width: 160px; }
 }

@@ -3,7 +3,7 @@ import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from '@ton/ton';
 import { useDnsRecords, DnsTextRecord } from '../hooks/useDnsRecords';
 import { encodeDnsText, buildChangeDnsRecord, categoryToKey } from '../lib/dnsText';
-import { TX_CONTRACT_AMOUNT, TX_FEE_AMOUNT, OWNER_WALLET } from '../lib/constants';
+import { TX_CONTRACT_AMOUNT, TX_FEE_AMOUNT, OWNER_WALLET, FEES_ENABLED } from '../lib/constants';
 import { saveKeyName, getKeyName } from '../lib/keyStore';
 import { Domain } from '../hooks/useDomains';
 import Button from './ui/Button';
@@ -41,7 +41,7 @@ export function RecordEditor({ domain, onBack }: Props) {
           payload: body.toBoc().toString('base64'),
         },
       ];
-      if (OWNER_WALLET) {
+      if (FEES_ENABLED && OWNER_WALLET) {
         messages.push({ address: OWNER_WALLET, amount: TX_FEE_AMOUNT });
       }
       await tonConnectUI.sendTransaction({
