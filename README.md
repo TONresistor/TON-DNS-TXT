@@ -193,6 +193,18 @@ npm run dev
 
 The Vite dev server proxies `/api/*` to `localhost:4727`.
 
+### 3. Telegram Bot
+
+```bash
+cd bot
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+# Fill in BOT_TOKEN and optionally LOGO (file path, URL, or Telegram file ID)
+python bot.py
+```
+
 ---
 
 ## Environment variables
